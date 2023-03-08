@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <style>
+      .strike-through{
+        text-decoration: line-through;
+        color:green
+      }
+      .dark{
+        background-color: yellowgreen;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- img태그 -->
+      <img src="짱구.jpg">직접지정</img>
+      <br>
+
+      <!-- 각 tag의 속성에 접근 할 때 사용 -->
+      <img v-bind:src="fileName">v-bind로 지정</img>
+      <br>
+
+      <!-- a태그 -->
+      <a v-bind:href="myURL"> 링크를 v-bind로 지정</a>
+      
+      <!-- align 정렬 -->
+      <p align = "right" >우측 정렬 직접 저장</p>
+      <p v-bind:align="myAlign">우측 정렬을 v-bind로 지정</p>
+
+      <!-- 인라인 스타일 지정 -->
+      <p style="color: #e80">문자색 직접 지정</p>
+      <p v-bind:style="{color:myColor}">v-bind로 문자색 지정</p>
+
+      <p style="font-size:200%">글자 크기 직접 지정</p>
+      <p v-bind:style="{fontSize : mySize}">글자 크기를 v-bind로 지정</p>
+
+      <p style="background-color: aqua;">배경색 직접 지정</p>
+      <p v-bind:style="{backgroundColor: myBackColor}">배경색을 v-bind로 지정</p>
+
+      <p class="strike-through">직접 클래스 지정</p>
+      <p v-bind:class="myClass">v-bind로 클래스 지정</p>
+      <p v-bind:class="[myClass, darkClass]">v-bind를 복수로 지정</p>
+      <p v-bind:class="{'strike-through' : isON}">데이터로 클래스 ON/OFF</p>
+   
+      <button type = "button" v-on:click="changeClass">변경</button>
+    </div>
+
+    <script>
+      new Vue({
+        el:'#app',
+        data:{
+          fileName:'짱구.jpg',
+          myURL : 'https://www.naver.com',
+          myAlign: 'right',
+          myColor: '#e80',
+          mySize : '200%',
+          myBackColor : 'aqua',
+          myClass : 'strike-through',
+          darkClass : 'dark',
+          isON : true
+        },
+        methods : {
+          changeClass : function() {
+            if(this.isON){
+            this.isON = false;
+            } else{
+              this.isON = true;
+            }
+          }
+        }
+      })
+      </script>
+  </body>
+</html>

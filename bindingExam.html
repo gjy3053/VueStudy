@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  </head>
+  <style>
+    .strike-through {
+      text-decoration: underline;
+      color: blue;
+    }
+    .underLine {
+      text-decoration: underline;
+      color: blue;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <a v-bind:href="myURL">네이버로 연결</a>
+      <br />
+      <img v-bind:src="fileName" />짱구
+      <br />
+      <p v-bind:align="myAlign">텍스트 왼쪽 정렬</p>
+      <p v-bind:align="myAlign2">텍스트 오른쪽 정렬</p>
+      <p v-bind:align="myAlign3">텍스트 가운데 정렬</p>
+      <br />
+      <p v-bind:style="{color:myColor}">인라인 스타일 글자색 빨간색</p>
+      <p v-bind:style="{fontSize:mySize}">인라인 스타일 글자크기 150%크게</p>
+      <p
+        v-bind:style="{color:myColor, fontSize:mySize, backgroundColor:myBack}"
+      >
+        인라인 스타일로 글자크기 150% 빨간색 배경 노랑색
+      </p>
+      <p v-bind:style="{textDecoration:textDeco, color: Col}">
+        blue underline지정
+      </p>
+      <p v-bind:class="myClass">blue underline, strike-through</p>
+    </div>
+
+    <div id="app2">
+      <p>
+        <a v-bind:href="myLink">네이버로 연결</a>
+      </p>
+       <p>
+        <img v-bind:src="myImage">강아지로 표기</img>
+      </p>
+      <p v-bind:align="leftAlign">텍스트 왼쪽 정렬</p>
+      <p v-bind:align="rightAlign">텍스트 오른쪽 정렬</p>
+      <p v-bind:align"centerAlign">텍스트 가운데 정렬</p>
+      <p v-bind:style="{color:rColor}">인라인 스타일 글자색 빨간색</p>
+        <!-- <p v-bind:style="{fontSize:fSize}">인라인 스타일 글자크기 150%크기</p>
+      <p v-bind:style="{color:rColorm fontSize:fSize, backgroundColor:Bcolor}">인라인 스타일로 글자크기 150%빨간색</p>
+      <p v-bind:class="underLineText"> blue_inderLine 지정</p>
+      <p v-bind:class="[underLineText, strikeThrough]">underLindText, strike-through </p> -->
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app2",
+        data: {
+          myLink: "https://www.naber.com",
+          myImage: "짱구.jpg",
+          leftAlign: "left",
+          rightAlign: "right",
+          centerAlign: "center",
+          rColor: "red",
+          fSize: "150%",
+          underLineText: "underLine",
+          strikeThrough: "strike-through",
+        },
+      });
+
+      new Vue({
+        el: "#app",
+        data: {
+          myURL: "https://www.naver.com",
+          fileName: "짱구.jpg",
+          myAlign: "left",
+          myAlign2: "right",
+          myAlign3: "center",
+          myColor: "red",
+          mySize: "150%",
+          myBack: "yellow",
+          textDeco: "underline",
+          Col: "blue",
+          myClass: "strike-through",
+        },
+        methods: {},
+      });
+    </script>
+  </body>
+</html>

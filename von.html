@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <button v-on:click="countUp">1씩증가</button>
+      <button @click="countDown">1씩감소</button>
+      <p>{{count}}</p>
+      <button v-bind:disabled="isClick" v-on:click="oneClick">조아</button>
+
+      <p>{{count2}}</p>
+      <button @click="count2Up(3)">3씩 증가</button>
+      <button @click="count2Up(10)">10씩 증가</button>
+      <button @click="count2Up(100)">100씩 증가</button>
+    </div>
+    <script>
+      function good() {
+        window.alert("좋아~~");
+      }
+      new Vue({
+        el: "#app",
+        data: {
+          count: 0,
+          isClick: false,
+          count2: 0,
+        },
+        methods: {
+          countUp: function () {
+            this.count++;
+          },
+          countDown: function () {
+            this.count--;
+          },
+          oneClick: function () {
+            this.isClick = true;
+            good();
+          },
+          count2Up: function (value) {
+            this.count2 += value;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

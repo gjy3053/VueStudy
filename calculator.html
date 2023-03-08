@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="number" v-model.number="num1" />
+      <input type="number" v-model.number="num2" />
+      <br />
+      <br />
+      <button type="button" v-on:click="sum">덧셈계산</button>
+      <button type="button" v-on:click="minus">뺄셈계산</button>
+      <button type="button" v-on:click="multi">곱셈계산</button>
+      <button type="button" v-on:click="divi">나눗셈계산</button>
+      <p>결과는 {{result}}입니다</p>
+      <br />
+      <button type="button" v-on:click="countUp(10)">10씩증가</button>
+      <button type="button" v-on:click="countUp(100)">100씩증가</button>
+      <button type="button" v-on:click="countUp(1000)">1000씩증가</button>
+      <p>결과는 {{result2}}입니다</p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          num1: 0,
+          num2: 0,
+          result: 0,
+          result2: 0,
+        },
+        methods: {
+          sum: function () {
+            this.result = this.num1 + this.num2;
+          },
+          minus: function () {
+            this.result = this.num1 - this.num2;
+          },
+          multi: function () {
+            this.result = this.num1 * this.num2;
+          },
+          divi: function () {
+            this.result = this.num1 / this.num2;
+          },
+          countUp: function (value) {
+            this.result2 += value;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

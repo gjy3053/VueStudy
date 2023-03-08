@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <label> <input type="checkbox" v-model="myVisible" />표시 </label>
+
+      <p v-show="myVisible">쇼박스 ON</p>
+      <p v-if="myVisible">IF박스 ON</p>
+      <p v-else>체크박스 OFF</p>
+
+      <button v-if="isShow" @click="good">쪼아</button>
+
+      <br />
+      <br />
+
+      <template v-if="type=='A'">
+        <h1>tempalte tiles</h1>
+        <p>template p tag</p>
+      </template>
+
+      <template v-else>
+        <h1>else tempalte tiles</h1>
+        <p>else template p tag</p>
+      </template>
+
+      <p v-if="type=='A'">A</p>
+      <p v-else-if="type=='B'">B</p>
+      <p v-else-if="type=='C'">C</p>
+      <p v-else>{{type}}</p>
+      <input v-model="type" />
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myVisible: false,
+          isShow: true,
+          type: "",
+        },
+        methods: {
+          good: function () {
+            this.isShow = false;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

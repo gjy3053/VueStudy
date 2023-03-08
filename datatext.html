@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  </head>
+
+  <body>
+    <!-- 숫자, 문자, 불리언 -->
+    <div id="app">
+      <p>{{myNumber * 1.08}}</p>
+      <p>{{myText.substr(0,1)+'문자열 잘림'}}</p>
+      <p>{{!myBool}}</p>
+      <!-- 배열 -->
+      <p>배열{{myArray}}</p>
+      <!-- 오브젝트 -->
+      <p>오브젝트 {{myObj}}</p>
+      <p>오브젝트 {{myObj[0].price}} {{myObj[1].name}}</p>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myNumber: 12345,
+          myText: "Hello",
+          myBool: true,
+          myArray: ["다즐링", "얼그레이", "실론"],
+          myObj: [
+            { name: "다즐링", price: 600 },
+            { name: "얼그레이", price: 500 },
+            { name: "다실론", price: 800 },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

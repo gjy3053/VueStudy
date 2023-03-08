@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="myName" placeholder="이름" />
+      <p>나는 {{myName}}입니다.</p>
+      <textarea v-model="myText"></textarea>
+      <p>문장은 : {{myText}}</p>
+      <p>문자수 : {{myText.length}}</p>
+      <label>
+        <input type="checkbox" v-model="myCheck" />
+        체크박스의 상태 : {{myCheck}}
+      </label>
+
+      <br /><br />
+
+      <label>
+        <input type="checkbox" v-model="myChecks" value="red" />
+        빨간색 </label
+      ><br />
+
+      <label>
+        <input type="checkbox" v-model="myChecks" value="green" />
+        초록색 </label
+      ><br />
+
+      <label>
+        <input type="checkbox" v-model="myChecks" value="blue" />
+        파란색 </label
+      ><br />
+
+      선택한 색 : {{myChecks}}
+
+      <br /><br />
+      <label>
+        <input type="checkbox" v-model="myAgree" />
+        동의합니다.
+      </label>
+      <button type="button" v-bind:disabled="!myAgree">송신</button>
+      <br><br>
+
+      <label>
+        <input type="radio" value="red" v-model="picked">
+        빨간색
+        </label><br>
+
+        <input type="radio" value="green" v-model="picked">
+        초록색
+        </label><br>
+
+        <input type="radio" value="yellow" v-model="picked">
+        노란색
+        </label><br>
+
+        {{picked}} 선택
+
+        <br><br>
+        <label>
+          <input type="radio" value="짱구.jpg" v-model="fileName">짱구
+          <input type="radio" value="책표지.jpg" v-model="fileName">불
+        </label>
+        <img style="width:100x;" v-bind:src="fileName">
+
+      </label>
+
+      
+
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myName: "",
+          myText: "오늘 날씨가 따뜻",
+          myCheck: false,
+          myChecks: [],
+          myAgree: false,
+          picked: "red",
+          fileName : ""
+        },
+      });
+    </script>
+  </body>
+</html>
