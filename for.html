@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  </head>
+
+  <body>
+    <!-- jstl -> each -->
+    <div id="app">
+      <ul>
+        <li v-for="(item,index) in myArray">{{item}} : {{index}}</li>
+      </ul>
+      <ul>
+        <li v-for="item in objArray">{{item.name}} {{item.price}}</li>
+      </ul>
+
+      <ul>
+        <li v-for="n in 10">{{n}} x 5 = {{n*5}}</li>
+      </ul>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myArray: ["쨈빵", "멜론빵", "크로와상"],
+          objArray: [
+            { name: "쩀빵", price: 1000 },
+            { name: "멜론빵", price: 2000 },
+            { name: "크로와상", price: 3000 },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
