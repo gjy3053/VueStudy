@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <!-- myArray 1~10까지 데이터 담고 있음. -->
+        <!-- 짝수만 li tag에 등록 -->
+        <!-- <li v-for="item in myArray" v-if="item%2==0">{{item}}</li> -->
+        <li v-for="item in myArray">{{item}}</li>
+      </ul>
+      <button v-on:click="evenData()">짝수만 표시</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6],
+        },
+        methods: {
+          evenData: function () {
+            //filter
+            this.myArray = this.myArray.filter(function (val) {
+              return val % 2 == 0;
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
