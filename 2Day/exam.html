@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <h3>제한 시간내에 문자 입력하기</h3>
+    <br />
+    <div id="app">
+      <p>
+        금지문자(,로 나누어 복수 입력 가능)
+        <input type="text" v-model="inputText" v-bind:disabled="myDis" />
+      </p>
+      <p>
+        제한시간을 입력하세요(초)
+        <input type="number" v-model="inputTime" v-bind:disabled="myDis" />
+        <button v-on:click="startTimer()" v-bind:disabled="myDis">시작</button>
+      </p>
+      <p>남은시간{{restSec}}</p>
+      <textarea v-model="inputContents" v-bind:disabled="!myDis"></textarea>
+      <p>{{inputContents.length}}개의 문자를 입력하였습니다.</p>
+      <p>벌점:{{score}}(금지문자 1개당 12점)</p>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          timerObj: null,
+          restSec: "",
+          myDis: false,
+          inputContents: "",
+          inputText: "",
+          score: 0,
+          inputTime: 0,
+        },
+        methods: {
+          startTimer: function () {
+            this.myDis = true;
+            this.restSec = this.inputTime;
+            clearInterval(this.timerObj);
+            this.timerObj = setInterval(() => {
+              this.restSec--;
+            }, 1000);
+            // clearInterval(this.timerObj) -> 타이머 멈춤
+          },
+        },
+        watch: {
+          restSec: function () {
+            if (this.restSec <= 0) {
+              alert("시간 종료");
+              clearInterval(this.timerObj);
+              this.myDis = false;
+            }
+          },
+          inputContents: function () {
+            let word = this.inputText.split(",");
+            for (let temp of word) {
+              //for(let i=0; i<word.length; i++)
+              var pos = this.inputContents.indexOf(temp); //let keyword=word[i]   temp->word[i]
+              if (pos >= 0) {
+                alert(temp + " 입력금지");
+                this.inputContents = this.inputContents.substr(0, pos);
+                this.restSec += 10;
+                this.score += 12;
+              }
+            }
+          },
+        },
+      });
+
+      // computed: {  //벌점
+      //   resultScore: function() {
+      //     return this.forhiddenCnt * 12;
+      //   }
+      // }
+    </script>
+  </body>
+</html>

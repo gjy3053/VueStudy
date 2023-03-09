@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      .tag {
+        margin: 10px;
+        border: 1px solid gray;
+      }
+      span {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- a태그 이벤트 전파 중지 -->
+    <a
+      id="btn"
+      href="https://www.naver.com"
+      v-on:click="warn('Form cannot be submitted yet'
+    , $event)"
+      >Submit</a
+    >
+
+    <script>
+      new Vue({
+        el: "#btn",
+        methods: {
+          warn: function (message, event) {
+            if (event) {
+              console.log(event.target);
+              console.log(event.currentTarget);
+              //이벤트 중지
+              event.preventDefault();
+            }
+            alert(message);
+          },
+        },
+      });
+    </script>
+
+    <!-- v-bind:class="style" : 스타일을 몽땅 가져오는것 -->
+    <div id="app2" v-bind:class="style">
+      <form
+        action="https://www.naver.com/"
+        :class="style"
+        @click="printMessage('form태그 선택')"
+        v-on:submit.privent
+      >
+        <div :class="style" v-on:click.stop="printMessage('div 태그 선택')">
+          <p v-bind:class="style" @click.once="printMessage('p 태그 선택')">
+            <a
+              href="https://www.google.com/"
+              :class="style"
+              v-on:click.prevent="printMessage('a태그 선택')"
+              >구글</a
+            >
+          </p>
+        </div>
+      </form>
+      <div :class="style">
+        <button @click="changeMessage($event), alertExcute()">
+          <span>
+          이벤트 핸들러 복수 실행
+          </span>
+      </div>
+    </div>
+
+    <script>
+      //이벤트 수식어 -> on 디렉티브(v-on)에 연결되는 이벤트 동작 제어
+      //.stop: 이벤트 버블링(이벤트 전파)차단 (자식->부모로 전파되는 이벤트)
+      //.prevent : 기본 이벤트 중지(예를 들어 a태그 href작동 안하고 싶을 때)
+      //.self: Event객체의 target == currentTarget 이벤트가 동작
+      //.once: 한번만 동작
+      //.capture: 이벤트 캡처링(이벤트 전파) 중단 (부모->자식으로 전파되는 이벤트)
+      new Vue({
+        el: "#app2",
+        data: {
+          style: "tag",
+          Message: "",
+        },
+        methods: {
+          printMessage: function (message) {
+            this.message = message;
+            alert(message);
+          },
+          changeMessage: function (event) {
+            if (event) {
+              console.log(event.target);
+              console.log(event.currentTarget);
+              this.message = "이벤트 실행 target : " + event.target;
+            }
+          },
+          alertExcute: function () {
+            alert("이벤트 핸들러 복수 등록");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

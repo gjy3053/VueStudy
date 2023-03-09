@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app2">
+      <!-- input의 value 속성이 비어 있으며 모든 데이터가 보이고 검색을 하면 해당되는 데이터만 보이도록 -->
+      <input type="text" />
+      <ul></ul>
+    </div>
+    <script>
+      let dataList = ["설악산", "한라산", "북한산", "백두산", "지리산"];
+      $(document).ready(function () {
+        init();
+        //$('#app2 > input:text:eq(0)') -> id가 app2 dom 자식중에 input타입이 text인 자식중에 인덱스가 0인 자식을 가지고 와라
+        $("#app2 > input:text:eq(0)").on("change", changeData);
+
+        function changeData() {
+          $("#app2 > ul:first").empty();
+
+          let keyword = $("#app2 > input:text:eq(0)").val();
+          if (keyword != "") {
+            $(dataList).each(function (idx, val) {
+              if (val.match(keyword)) {
+                $("#app2 > ul:first").append($("<li/>").text(val));
+              }
+            });
+          } else {
+            init();
+          }
+        }
+
+        function init() {
+          $(dataList).each(function (idx, val) {
+            $("#app2 > ul").append($("<li/>").text(val));
+          });
+        }
+      });
+    </script>
+
+    <br />
+    <hr />
+    <br />
+
+    <div id="app3">
+      <input type="text" v-model="findWord" />
+      <ul>
+        <li v-for="item in findItems">{{item}}</li>
+      </ul>
+    </div>
+
+    <script>
+      let myArray = ["설악산", "한라산", "북한산", "백두산", "지리산"];
+
+      new Vue({
+        el: "#app3",
+        data: {
+          findWord: "",
+          items: myArray,
+        },
+        computed: {
+          findItems: function () {
+            if (this.findWord) {
+              return this.items.filter(function (value) {
+                return value.indexOf(this.findWord) > -1;
+              }, this);
+            } else {
+              return this.items;
+            }
+          },
+        },
+      });
+    </script>
+
+    <br />
+    <hr />
+    <br />
+
+    <div id="app4">
+      <p v-bind:style="{backgroundColor: mixColor}">{{mixColor}}</p>
+      <input type="range" v-model="R" min="0" max="255" />
+      <input type="range" v-model="G" min="0" max="255" />
+      <input type="range" v-model="B" min="0" max="255" />
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app4",
+        data: {
+          R: 255,
+          G: 150,
+          B: 100,
+        },
+        computed: {
+          mixColor: function () {
+            var ans = "RGB(" + this.R + "," + this.G + "," + this.B + ")";
+            return ans;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <p>금지 문자는 「{{forbiddenText}}」</p>
+      <textarea v-model="inputText"></textarea>
+
+      <br /><br />
+      <p>앞으로 {{restSec}}</p>
+      <button v-on:click="startTimer()">START</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          forbiddenText: "안돼",
+          inputText: "오늘 날씨가 좋습니다",
+          restSec: 10,
+          timerObj: null,
+        },
+        methods: {
+          startTimer: function () {
+            clearInterval(this.timerObj);
+            this.restSec = 10;
+            this.timerObj = setInterval(() => {
+              this.restSec--;
+            }, 1000); //1000 --> 1초
+          },
+        },
+
+        watch: {
+          restSec: function () {
+            if (this.restSec <= 0) {
+              alert("제한시간 입니다.");
+              clearInterval(this.timerObj);
+            }
+          },
+          inputText: function () {
+            var pos = this.inputText.indexOf(this.forbiddenText);
+            if (pos >= 0) {
+              alert(this.forbiddenText + "는 입력할 수 없습니다.");
+              this.inputText = this.inputText.substr(0, pos);
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
