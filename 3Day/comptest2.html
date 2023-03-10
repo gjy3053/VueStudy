@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <my-component></my-component>
+      <local-component></local-component>
+    </div>
+    <br />
+    <div id="app2">
+      <my-component></my-component>
+      <local-component></local-component>
+      <instance-component></instance-component>
+    </div>
+
+    <script>
+      //전역 컴포넌트 선언
+      //앞으로 생성될 모든 vue인스턴스에서 사용할 수 있는 컴포넌트
+      Vue.component("my-component", {
+        template: `<div>안녕, 전역 컴포넌트</div>`,
+      });
+
+      //지역 컴포넌트 선언
+      //개별 Vue인스턴스에서 사용할수 있는 컴포넌트
+      // -> vue생상(new Vue)할때 컴포넌트 등록해야 사용 할 수 있다.
+      const component = {
+        template: `<div>안녕, 지역 컴포넌트</div>`,
+        //props
+      };
+
+      new Vue({
+        el: "#app",
+        components: {
+          //local-component(html, 대소문자 구분 못하기 때문에) == localComponent(JS)
+          localComponent: component,
+        },
+      });
+
+      new Vue({
+        el: "#app2",
+        components: {
+          //html에서 사용할 컴포넌트 이름 : {컴포넌트 내용}
+          "instance-component": {
+            template: `<div style = "border: 1px solid black;"
+                        <span>
+                          <h3>
+                            인스턴스로 등록한 컴포넌트
+                          </h3>
+                          </span>
+                          </div>`,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

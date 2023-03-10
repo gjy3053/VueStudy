@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <h2>컴포넌트를 숫자로 출력</h2>
+    <div id="app">
+      <my-component v-for="item in myArray" :my-name="item"></my-component>
+    </div>
+
+    <script>
+      const MyComponent = {
+        template: `<p>{{myText}}</p>`,
+        props: {
+          myName: Number,
+        },
+        computed: {
+          myText: function () {
+            if (this.myName % 2 == 0) {
+              return (this.myText = this.myName + "은 짝수 입니다.");
+            } else {
+              return (this.myText = this.myName + "은 홀수 입니다.");
+            }
+          },
+        },
+        // props : ['myName'],
+        // created : function(){
+        //   if(this.myName % 2 == 0){
+        //     this.myText = this.myName + '은 짝수 입니다.';
+        //   } else{
+        //     this.myText = this.myName + '은 홀수 입니다.';
+        //   }
+        // }
+      };
+
+      new Vue({
+        el: "#app",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        components: {
+          "my-component": MyComponent,
+        },
+      });
+    </script>
+    <hr />
+    <!-- <div id="app2">
+      <input v-model="name" />
+      <name-component :today="200+15" :my-name="name"></name-component>
+      <name-component v-bind="dataList"></name-component>
+      <name-component my-name="또치" :today="100"></name-component>
+      <name-component my-name="12.5"></name-component>
+    </div>
+
+    <script>
+      const component = {
+        template: `<p>{{today+1}}, 나는 {{myName}}입니다.</p>`,
+        props: {
+          myName: String,
+          today: {
+            type: Number,
+            default: -1,
+          },
+        },
+      };
+
+      new Vue({
+        el: "#app2",
+        data: {
+          name: "",
+          array: {
+            myName: 22,
+            today: 205,
+          },
+        },
+        computed: {
+          dataList: function () {
+            return {
+              myName: this.name,
+              today: Data.now(),
+            };
+          },
+        },
+        components: {
+          "name-component": component,
+        },
+      });
+    </script> -->
+    <div id="app2">
+      <input v-model="name" />
+      <name_comp :today="200+15" :my-name="name"></name_comp>
+      <!-- dataList안에 있는 today, myName을 자식 컴포넌트에 binding -->
+      <name_comp v-bind="dataList"></name_comp>
+      <name_comp :my-name="또치" :today="100"></name_comp>
+      <name_comp :my-name="12.5"></name_comp>
+    </div>
+
+    <script>
+      const nameComp = {
+        template: `<p> {{today+1}}, 나는 {{myName}}입니다.</p>`,
+        props: {
+          myName: String,
+          today: {
+            type: Number,
+            default: -1,
+          },
+        },
+      };
+      new Vue({
+        el: "#app2",
+        data: {
+          name: "",
+          array: {
+            myName: 22,
+            today: 205,
+          },
+          computed: {
+            dataList: function () {
+              return {
+                myName: this.name,
+                today: Date.now(),
+              };
+            },
+          },
+        },
+        components: {
+          name_comp: nameComp,
+        },
+      });
+    </script>
+  </body>
+</html>

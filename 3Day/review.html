@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <script>
+    // vue.js -> vue객체(컴포넌트)의 조합
+
+    // //Vue객체의 속성
+    // //공통속성
+    // data : Vue가 다를 데이터 -> 프로퍼티(변수 ,CRUD가능)
+    // computed : Vue가 다를 데이터 -> 산출 프로퍼티(읽기 전용)
+    //           data 속성과 반드시 연결되어 있어야함. (의존적)
+    // watch : data 혹은 computed, 정의되어 있는 모든 프로퍼티 감시
+    //         변화가 발생 -> 미리 정의한 내용을 실행
+    // methods : Vue안에서 사용할 모든 함수를 정의(주로 이벤트 핸들러)
+    //           대표적으로 click
+    // template: vue객체가 가지고 있는 tag(기본 배경)
+
+    // //props : 외부에서 들어오는 정보를 담는 프로퍼티
+    // //$emit: 부모 컴포넌트에 있는 이벤트 발생
+  </script>
+  <body>
+    <div id="app">
+      <h3>참여자 명단</h3>
+      <p>현재 참여자 수 : {{count}}명</p>
+      <input-component v-on:insert-user-info="counting"></input-component>
+    </div>
+    <script>
+      const printComponent = {
+        template: `<div><p>이름:{{name}}, 나이: 만 {{age-1}}, 소속: {{dept}}</p></div>`,
+        props: {
+          name: String,
+          age: {
+            type: Number,
+            default: -1,
+          },
+          dept: String,
+        },
+      };
+
+      const inputComponent = {
+        template: `<div>
+        <div>
+          <div>
+            <label for="user_name">이름</label>
+            <input type="text" id="user_name" v-model="userName" />
+          </div>
+          <div>
+            <label for="user_age">나이</label>
+            <input type="text" id="user_age" v-model="userAge" />
+          </div>
+          <div>
+            <label for="user_dept">소속</label>
+            <select id="user_dept" v-model="userDept">
+              <option>학생</option>
+              <option>교수</option>
+            </select>
+            <div>
+              <h2>등록 예정 참여자 정보</h2>
+              <p>이름 : {{userInfo.name}}</p>
+              <p>나이 : {{userInfo.age}}</p>
+              <p>소속 : {{userInfo.dept}}</p>
+            </div>
+            <button v-on:click="insertUsers">등록</button>
+          </div>
+          <div>
+            <print-component v-for="item in userList" v-bind="item"></print-component>
+          </div>
+        </div>
+      </div>`,
+        data: function () {
+          return {
+            userName: "",
+            userAge: 0,
+            userDept: "",
+            userList: [],
+          };
+        },
+        computed: {
+          userInfo: function () {
+            return {
+              name: this.userName,
+              age: this.userAge,
+              dept: this.userDept,
+            };
+          },
+        },
+        methods: {
+          insertUsers: function () {
+            this.userList.push(this.userInfo);
+            this.userName = "";
+            this.userAge = 0;
+            this.userDept = "";
+            this.$emit("insert-user-info");
+          },
+        },
+        components: {
+          "print-component": printComponent,
+        },
+      };
+
+      new Vue({
+        el: "#app",
+        data: {
+          count: 0,
+        },
+        components: {
+          "input-component": inputComponent,
+        },
+        methods: {
+          counting: function () {
+            this.count++;
+          },
+          today: function () {
+            let today = new Date();
+
+            let year = today.getFullYear();
+            console.log("today.getMonth()" + today.getMonth());
+            let month = ("0" + (today.getMonth() + 1)).slice(-2);
+            console.log("today.getDate()" + today.getDate());
+            let day = ("0" + today.getDate()).slice(-2);
+
+            return year + "-" + month + "-" + day;
+          },
+        },
+        watch: {
+          count: function () {
+            let pTag = document.querySelector("p");
+            let message = document.createElement("p");
+            message.textContent =
+              this.today() + "기준으로 최종 업데이트 되었습니다.";
+            pTag.after(message);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

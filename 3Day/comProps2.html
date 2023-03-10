@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <my-component my-name="철수"></my-component>
+      <my-component my-name="유리"></my-component>
+      <my-component></my-component>
+    </div>
+    <script>
+      const MyComponent = {
+        template: `<p> 나는 {{myName}} 입니다 </p>`,
+        //props:[]
+        props: {
+          myName: String,
+        },
+        created: function () {
+          //Vue인스턴스 생성 후 실행
+          if (this.myName == null) {
+            this.myName = "마이콜";
+          }
+        },
+      };
+
+      new Vue({
+        el: "#app",
+        components: {
+          "my-component": MyComponent,
+        },
+      });
+    </script>
+
+    <hr />
+
+    <div id="app2">
+      <!-- JS : for in, for of -->
+      <my-component
+        v-for="(item, index) in myArray"
+        :my-name="item"
+      ></my-component>
+    </div>
+
+    <script>
+      let MyComponent2 = {
+        template: `<p>나는 {{myName}}입니다.</p>`,
+        props: {
+          myName: String,
+        },
+        created: function () {
+          if (this.myName == null) {
+            this.myName = "도우너";
+          }
+        },
+      };
+
+      new Vue({
+        el: "#app2",
+        data: {
+          myArray: ["또치", "희동", "길동", "마이콜"],
+        },
+        components: {
+          "my-component": MyComponent2,
+        },
+      });
+    </script>
+
+    <hr />
+    <h1>컴포넌트를 숫자로 출력</h1>
+
+    <div id="app3">
+      <my-component v-for="item in myArray" :num="item"></my-component>
+    </div>
+
+    <script>
+      const MyComponent3 = {
+        template: `<p>{{num}} {{abc}} 입니다<p>`,
+        props: {
+          num: Number,
+          //abc: String,
+        },
+        created: function () {
+          if (this.num % 2 == 0) this.abc = "짝수";
+          else this.abc = "홀수";
+        },
+      };
+
+      new Vue({
+        el: "#app3",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        components: {
+          "my-component": MyComponent3,
+        },
+      });
+    </script>
+  </body>
+</html>

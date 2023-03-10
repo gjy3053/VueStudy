@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 리터럴 속성 -->
+      <my-component text="World"></my-component>
+    </div>
+
+    <script>
+      const MyComponent = {
+        template: `<div>{{text}}!!</div>`,
+        props: ["text"], //부모가 가지고 있는 데이터를 자식이 쓸 수 있게 함
+      };
+
+      new Vue({
+        el: "#app",
+        components: {
+          "my-component": MyComponent,
+        },
+      });
+    </script>
+
+    <!-- 동적 속성-->
+    <div id="app2">
+      <my-component v-bind:text="message"></my-component>
+    </div>
+
+    <script>
+      const MyComponent2 = {
+        template: `<div> 안녕 {{text}} !! </div>`,
+        props: ["text"],
+      };
+
+      new Vue({
+        el: "#app2",
+        components: {
+          "my-component": MyComponent2,
+        },
+        // data() {
+        //   return {
+        //     message: "부모 컴포넌트로 부터!!",
+        //   };
+        // },
+        data: {
+          message: "부모 컴포넌트로 부터!!",
+        },
+      });
+    </script>
+
+    <div id="app3">
+      <my-component></my-component>
+    </div>
+
+    <script>
+      const counter = { counter: 0 }; //전역 변수 선언
+      const MyComponent3 = {
+        template: `<div><button v-on:click='counter+=1'>
+                    {{counter}}
+                    </button>
+                    </div>`,
+        data() {
+          return counter;
+        },
+      };
+
+      new Vue({
+        el: "#app3",
+        components: { "my-component": MyComponent3 },
+        data() {
+          return {
+            message: "",
+          };
+        },
+      });
+    </script>
+
+    <div id="app4">
+      <my-component
+        :num="Mynumber"
+        :str="passedString"
+        :even="Mynumber"
+        :obj="passedObject"
+      ></my-component>
+    </div>
+
+    <script>
+      const MyComponent4 = {
+        template: `<div>숫자 : {{num}} <br> 문자열 : {{str}} <br>
+               짝수? : {{even}} <br>객체 : {{obj.message}}`,
+        props: {
+          num: {
+            //숫자 검증 : 반드시 존재햐아 한다.
+            type: Number, //num 숫자 입력하는 데이터
+            required: true, // required ->반드시 데이터 입력되야한다.
+          },
+          str: {
+            //문자 검증
+            type: String,
+            default: "안녕", //str에 데이터가 없을 시 default사용
+          },
+          even: {
+            //커스텀검사
+            validator: (value) => {
+              return value % 2 == 0;
+            },
+          },
+          obj: {
+            type: Object,
+            default: () => {
+              return { message: "안녕 객체로부터" };
+            },
+          },
+        },
+      };
+
+      new Vue({
+        el: "#app4",
+        components: {
+          "my-component": MyComponent4,
+        },
+        data() {
+          return {
+            passedString: "안녕 부모로 부터!",
+            Mynumber: 43,
+            passedObject: { message: "넘겨준 객체" },
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -17,7 +17,11 @@
       </p>
       <p>
         제한시간을 입력하세요(초)
-        <input type="number" v-model="inputTime" v-bind:disabled="myDis" />
+        <input
+          type="number"
+          v-model.number="inputTime"
+          v-bind:disabled="myDis"
+        />
         <button v-on:click="startTimer()" v-bind:disabled="myDis">시작</button>
       </p>
       <p>남은시간{{restSec}}</p>
