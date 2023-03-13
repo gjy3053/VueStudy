@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+    <script src="vue-router.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- 기본값이 a 태그 -->
+      <router-link to="/main">main</router-link>
+      <!-- tag : button -->
+      <router-link tag="button" to="/info">info</router-link>
+
+      <!-- userInfo라는 path로 이동한다는 말 -->
+      <router-link to="{name : 'userInfo'}">UserInfo</router-link>
+
+      <router-link
+        tag="button"
+        :to="{name : 'user', params : {username : 'erina'}}"
+        >buttonParam</router-link
+      >
+
+      <router-view></router-view>
+    </div>
+
+    <script>
+      const mainComponent = {
+        template: `div>
+            <h1>메인페이지</h1>
+          </div>`,
+      };
+      const infoComponent = {
+        template: ` <div>
+            <h3>정보페이지</h3>
+          </div>`,
+      };
+
+      // 한 번에 합침
+      const router = new VueRouter({
+        routes: [
+          {
+            path: "/main",
+            component: mainComponent,
+          },
+          {
+            path: "/info",
+            component: infoComponent,
+          },
+          //<router-link to="{name : 'userInfo'}">UserInfo</router-link>
+          //갈 수 있게끔 라우터를 만듦
+          {
+            path: "/userInfo/:id/pwd/:pwd",
+            name: "userInfo",
+            component: {
+              //매개변수로 넘어오는 값을 가져올 수 있다
+              template: `<div>
+                            user {{this.$route.params.id}} <br/>
+                            pwd {{this.$route.params.pwd}}
+                          </div>`,
+            },
+          },
+          {
+            path: "/users/:username",
+            name: "user",
+            component: {
+              template: `<div>
+                            <p>유저 정보 : {{this.$route.params.username}}</p>
+                          </div>`,
+              props: ["username"],
+            },
+            props: true,
+          },
+        ],
+      });
+
+      new Vue({
+        el: "#app",
+        router: router,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <p>{{count}}</p>
+      <button v-on:click="countUp">증가</button>
+      <count-component :my-count.sync="count"></count-component>
+    </div>
+
+    <script>
+      const countComponent = {
+        template: `<div>
+                      <p>{{myCount}}</p>
+                      <button v-on:click="myCountUp">자식증가</button>
+                    </div>`,
+        props: ["myCount"],
+        methods: {
+          myCountUp: function () {
+            this.myCount++;
+            this.$emit("update:myCount", this.myCount);
+            console.log("자식 myCountUp", this.myCount);
+          },
+        },
+      };
+      new Vue({
+        el: "#app",
+        data: {
+          count: 0,
+        },
+        methods: {
+          countUp: function () {
+            this.count++;
+            console.log("부모 myCountUp 호출", this.count);
+          },
+        },
+        components: {
+          countComponent,
+        },
+      });
+    </script>
+  </body>
+</html>
